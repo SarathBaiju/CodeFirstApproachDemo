@@ -1,0 +1,38 @@
+﻿@model IEnumerable<CodeFirstWithMvc.Models.Department>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="panel panel-danger">
+    <div class="panel panel-heading">Department</div>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+
+    <table class="table">
+        <tr>
+            <th>
+                Department Name
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelitem => item.DepartmentName)
+                </td>
+                <td>
+                    @Html.ActionLink("edit", "edit", new { id = item.Id }) |
+                    @Html.ActionLink("details", "details", new { id = item.Id }) |
+                    @Html.ActionLink("delete", "delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+
