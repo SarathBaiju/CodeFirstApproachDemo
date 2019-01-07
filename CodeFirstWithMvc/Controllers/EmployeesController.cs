@@ -16,10 +16,32 @@ namespace CodeFirstWithMvc.Controllers
         private DepartmentContext db = new DepartmentContext();
 
         // GET: Employees
-        public ActionResult Index()
+
+        
+            
+        [HttpGet]
+        public ActionResult Index(string option,string search)
         {
-            var employees = db.Employees.Include(e => e.Department);
-            return View(employees.ToList());
+            //var employees = db.employees.include(e => e.department);
+            //return view(employees.tolist());
+            if (option == "EmployeeName")
+            {
+                return View(db.Employees.Include(e => e.Department).Where(p => p.EmployeeName.StartsWith(search) || search==null).ToList());
+            }
+            else if (option == "Designation")
+            {
+                return View( db.Employees.Include(e => e.Department).Where(p => p.Designation.StartsWith(search) || search == null).ToList());
+            }
+            //else
+            //{
+            //    return View( db.Employees.Include(e => e.Department).Where(p => p.Department == search).ToList());
+            //}
+            else if(option == "Department")
+            {
+                return View(db.Employees.Include(e => e.Department).Where(p => p.Department.DepartmentName.StartsWith(search)).ToList());
+            }
+           return View(db.Employees.ToList());
+          
         }
 
         // GET: Employees/Details/5
@@ -36,11 +58,19 @@ namespace CodeFirstWithMvc.Controllers
             }
             return View(employee);
         }
+        public Employee getEmployeeDetailsWithId(int id)
+        {
+            if(id==0)
+            {
+                throw new Exception();
+            }
+            Employee employee = db.Employees.Find(id);
+            return employee;
+        }
 
         // GET: Employees/Create
         public ActionResult Create()
         {
-            
             ViewBag.DepartmentId = new SelectList(db.Departments, "Id", "DepartmentName");
             return View();
         }
@@ -50,7 +80,7 @@ namespace CodeFirstWithMvc.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,EmpName,Designation,DepartmentId")] Employee employee)
+        public ActionResult Create([Bind(Include = "Id,EmployeeName,Designation,DepartmentId")] Employee employee)
         {
             if (ModelState.IsValid)
             {

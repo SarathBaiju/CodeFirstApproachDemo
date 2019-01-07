@@ -8,7 +8,7 @@ namespace CodeFirstWithMvc.Models
     public class Employee
     {
         public int Id { get; set; }
-        public string EmpName { get; set; }
+        public string EmployeeName { get; set; }
         public string Designation { get; set; }
         public int DepartmentId { get; set; }
         public virtual Department Department { get; set; }

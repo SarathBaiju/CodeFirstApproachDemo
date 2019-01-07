@@ -10,7 +10,12 @@ namespace CodeFirstWithMvc.Controllers
     {
         public ActionResult Index()
         {
+           
             return View();
+        }
+        public enum Grade
+        {
+            A=1,B,C,D,E
         }
 
         public ActionResult About()
